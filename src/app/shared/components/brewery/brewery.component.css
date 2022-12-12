@@ -1,0 +1,22 @@
+div {
+  padding: 30px 40px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+div h2 {
+  margin-bottom: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+div button {
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: yellow;
+}
+
+/*# sourceMappingURL=brewery.component.css.map */

@@ -1,0 +1,33 @@
+<h1>{{ title | titlecase }}</h1>
+
+<form>
+  <input
+    type="text"
+    placeholder="Search brewery..."
+  >
+  <button
+  >Search</button>
+</form>
+
+<tui-loader *ngIf="loading"></tui-loader>
+
+<div *ngIf="breweryService.breweries">
+  <ng-template>index</ng-template>
+  <tui-pagination
+    *ngIf="!loading"
+    [length]="length"
+    [index]="index"
+    (indexChange)="goToPage($event)"
+  ></tui-pagination>
+  <app-brewery
+    *ngFor="let brewery of breweryService.breweries; let i = index"
+    [brewery]="brewery"
+    (clickEvent)="setSelectBrewery($event)"
+  ></app-brewery>
+</div>
+
+<app-modal *ngIf="selectBrewery && modalService.isVisible$ | async" title="Chosen brewery description">
+  <app-brewery-info
+    [brewery]="selectBrewery!"
+  ></app-brewery-info>
+</app-modal>

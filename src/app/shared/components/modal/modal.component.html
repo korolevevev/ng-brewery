@@ -1,0 +1,12 @@
+<div
+  class="modal-surroundings"
+  (click)="modalService.close()"
+></div>
+
+<div class="modal-window">
+  <h1>{{ title | titlecase }}</h1>
+
+  <ng-content></ng-content>
+</div>
+
+
