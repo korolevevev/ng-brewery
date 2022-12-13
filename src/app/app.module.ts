@@ -20,9 +20,14 @@ import {NavigationComponent} from './shared/components/navigation/navigation.com
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {LandingPageComponent} from './pages/landing-page/landing-page.component';
-import {LeafletModule} from "@asymmetrik/ngx-leaflet";
-import { LeafletMapComponent } from './shared/components/leaflet-map/leaflet-map.component';
 import {TuiInputCountModule, TuiPaginationModule, TuiTabsModule} from "@taiga-ui/kit";
+import {AngularYandexMapsModule, YaConfig} from 'angular8-yandex-maps';
+
+const mapConfig: YaConfig = {
+  apikey: '022738c7-4e69-45be-9c0d-ddee4a5b2cf0',
+  lang: 'ru_RU',
+};
+
 
 @NgModule({
   declarations: [
@@ -33,7 +38,6 @@ import {TuiInputCountModule, TuiPaginationModule, TuiTabsModule} from "@taiga-ui
     ModalComponent,
     NavigationComponent,
     LandingPageComponent,
-    LeafletMapComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,6 @@ import {TuiInputCountModule, TuiPaginationModule, TuiTabsModule} from "@taiga-ui
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
-    LeafletModule,
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
@@ -51,7 +54,8 @@ import {TuiInputCountModule, TuiPaginationModule, TuiTabsModule} from "@taiga-ui
     TuiLoaderModule,
     TuiTabsModule,
     TuiSvgModule,
-    TuiInputCountModule
+    TuiInputCountModule,
+    AngularYandexMapsModule.forRoot(mapConfig)
   ],
   providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}],
   bootstrap: [AppComponent]

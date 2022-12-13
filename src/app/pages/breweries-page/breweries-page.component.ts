@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from '@ang
 import {IBrewery} from "../../shared/models/brewery";
 import {BreweryService} from "../../shared/services/brewery.service";
 import {ModalService} from "../../shared/services/modal.service";
-import {IMeta} from "../../shared/models/meta";
-import {Observable, Subscription} from "rxjs";
+import {debounce, Observable, Subscription, timer} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-breweries-page',
@@ -11,17 +11,16 @@ import {Observable, Subscription} from "rxjs";
   styleUrls: ['./breweries-page.component.less']
 })
 export class BreweriesPageComponent {
-  title = 'Breweries List'
-  loading = false
+  public title = 'Breweries List'
+  public loading = false
   public selectBrewery: IBrewery | null = null
-  public search: string = ''
+  public search: string = '';
 
-  meta: Object
+  public searchControl = new FormControl();
 
-  total = 8163
   index = 0;
-  perPage = 20;
-  length = Math.ceil(this.total/this.perPage)
+  perPage!: number;
+  length!: number;
 
   constructor(
     public breweryService: BreweryService,
@@ -31,26 +30,27 @@ export class BreweriesPageComponent {
   goToPage(index: number): void {
     this.index = index;
     this.loading = true
-    this.breweryService.getMeta().subscribe()
-    this.meta = this.breweryService.meta
-    console.log(this.meta)
-    this.breweryService.getAll(this.index, this.perPage).subscribe(() => {
+    this.breweryService.getMeta()
+    this.breweryService.getAll(this.index + 1, this.perPage).subscribe(() => {
       this.loading = false
     })
   }
 
   ngOnInit(): void {
     this.goToPage(this.index)
+    this.breweryService.meta$.subscribe((value)=>{
+      if(!value){
+        return
+      }
+
+      this.perPage = parseInt(value.per_page)
+      this.length = Math.ceil(parseInt(value.total)/parseInt(value.per_page))
+    })
+
+    this.searchControl.valueChanges.pipe(debounce(() => timer(300))).subscribe(value => {this.breweryService.searchBreweries(value)})
   }
 
   public setSelectBrewery(brewery: IBrewery) : void {
     this.selectBrewery = brewery
-  }
-
-  onSearchClick(search: string): void {
-    this.loading = true
-    this.breweryService.searchBreweries().subscribe(() => {
-      this.loading = false
-    })
   }
 }

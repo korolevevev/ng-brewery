@@ -4,9 +4,8 @@
   <input
     type="text"
     placeholder="Search brewery..."
+    [formControl]="searchControl"
   >
-  <button
-  >Search</button>
 </form>
 
 <tui-loader *ngIf="loading"></tui-loader>

@@ -1,50 +1,14 @@
-<nav>
-  <h1>Angular App</h1>
-
-  <span>
-    <a routerLink="/">Main</a>
-    <a routerLink="breweries">Breweries</a>
-  </span>
-</nav>
-
-<!--<tui-tabs [(activeItemIndex)]="activeItemIndex">-->
-<!--  <button-->
-<!--    tuiTab-->
-<!--    (click)="onClick('Maps')"-->
-<!--  >-->
-<!--    <tui-svg-->
-<!--      src="tuiIconCard"-->
-<!--      class="tui-space_right-2"-->
-<!--    ></tui-svg>-->
-<!--    Maps-->
-<!--  </button>-->
-<!--  <button-->
-<!--    tuiTab-->
-<!--    disabled-->
-<!--    (click)="onClick('Calls')"-->
-<!--  >-->
-<!--    <tui-svg-->
-<!--      src="tuiIconCall"-->
-<!--      class="tui-space_right-2"-->
-<!--    ></tui-svg>-->
-<!--    Calls-->
-<!--  </button>-->
-<!--  <button-->
-<!--    tuiTab-->
-<!--    (click)="onClick('Settings')"-->
-<!--  >-->
-<!--    <tui-svg-->
-<!--      src="tuiIconSettings"-->
-<!--      class="tui-space_right-2"-->
-<!--    ></tui-svg>-->
-<!--    Settings-->
-<!--  </button>-->
-<!--</tui-tabs>-->
-<!--<tui-input-count-->
-<!--  class="tui-space_top-4"-->
-<!--  [max]="2"-->
-<!--  [(ngModel)]="activeItemIndex"-->
-<!--&gt;-->
-<!--  activeItemIndex-->
-<!--</tui-input-count>-->
-
+<tui-tabs [(activeItemIndex)]="activeItemIndex">
+  <button
+    tuiTab
+    (click)="onClick('/')"
+  >
+    Main
+  </button>
+  <button
+    tuiTab
+    (click)="onClick('/breweries')"
+  >
+    Breweries
+  </button>
+</tui-tabs>

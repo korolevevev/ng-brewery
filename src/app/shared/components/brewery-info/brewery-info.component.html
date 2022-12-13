@@ -10,12 +10,10 @@
   <p *ngIf="brewery.phone">Phone: {{ brewery.phone }}</p>
   <p *ngIf="brewery.website_url">Website: <a href="">{{ brewery.website_url }}</a></p>
 
-<!--  <div class="fs-container">-->
-<!--    <app-leaflet-map-->
-<!--      (map$)="receiveMap($event)"-->
-<!--      (zoom$)="receiveZoom($event)"-->
-<!--      id='main-map'-->
-<!--    ></app-leaflet-map>-->
-<!--  </div>-->
+  <div class="container">
+    <ya-map [center]="[coords.latitude, coords.longitude]" [zoom]="12">
+      <ya-placemark [geometry]="[coords.latitude, coords.longitude]"></ya-placemark>
+    </ya-map>
+  </div>
 
 </div>

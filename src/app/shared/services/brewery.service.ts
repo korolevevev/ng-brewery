@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IBrewery} from "../models/brewery";
-import {delay, Observable, retry, tap} from "rxjs";
+import {BehaviorSubject, delay, Observable, retry, tap} from "rxjs";
 import {IMeta} from "../models/meta";
 
 @Injectable({
@@ -13,8 +13,13 @@ export class BreweryService {
   ) {
   }
 
+  public allInitBreweries: IBrewery[] = []
   public breweries: IBrewery[] = []
-  public meta: Object
+  private meta: BehaviorSubject<IMeta | null> = new BehaviorSubject<IMeta | null>(null);
+
+  public get meta$(): Observable<IMeta | null>{
+    return this.meta.asObservable();
+  }
 
   getAll(page: number, perPage: number): Observable<IBrewery[]> {
     return this.http.get<IBrewery[]>(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`).pipe(
@@ -23,17 +28,19 @@ export class BreweryService {
     )
   }
 
-  getMeta(): Observable<IMeta> {
-    return this.http.get<IMeta>(`https://api.openbrewerydb.org/breweries/meta`).pipe(
-      retry(3),
-      tap(meta => { this.meta = meta }),
-    )
+  getMeta(): void {
+    this.http.get<IMeta>(`https://api.openbrewerydb.org/breweries/meta`).subscribe(meta => { this.meta.next(meta) })
   }
 
-  searchBreweries(): Observable<IBrewery[]> {
-    return this.http.get<IBrewery[]>('https://api.openbrewerydb.org/breweries/search?query={search}').pipe(
-      retry(3),
-      tap(breweries => { this.breweries = breweries })
+  searchBreweries(value: string): void {
+    if (!value){
+      this.breweries = this.allInitBreweries;
+      return;
+    }
+
+     this.http.get<IBrewery[]>(`https://api.openbrewerydb.org/breweries/autocomplete?query=${value}`).subscribe(
+      breweries => { this.breweries = breweries
+      }
     )
   }
 }

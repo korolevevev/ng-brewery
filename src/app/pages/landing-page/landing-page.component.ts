@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing-page.component.sass']
 })
 export class LandingPageComponent {
-
+  constructor(
+  ) {
+  }
 }

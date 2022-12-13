@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IBrewery} from "../../models/brewery";
 import {Map} from 'leaflet';
 
@@ -7,8 +7,10 @@ import {Map} from 'leaflet';
   templateUrl: './brewery-info.component.html',
   styleUrls: ['./brewery-info.component.sass']
 })
-export class BreweryInfoComponent {
+export class BreweryInfoComponent implements OnInit{
   @Input() brewery: IBrewery
+
+  public coords!: {longitude: number, latitude: number}
 
   private map: Map;
   private zoom: number;
@@ -19,5 +21,10 @@ export class BreweryInfoComponent {
 
   receiveZoom(zoom: number) {
     this.zoom = zoom;
+  }
+
+  ngOnInit() {
+    this.brewery = {...this.brewery, }
+    this.coords = {longitude: parseFloat(this.brewery.longitude), latitude: parseFloat(this.brewery.latitude)};
   }
 }
